@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="parchment">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Casa de Juanita • Qué Hacer Cuando Hay Caos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f4efe6;
+      --bg-paper: #fbf8f3;
+      --bg-parchment: linear-gradient(145deg, #fffdf9 0%, #f6efe2 100%);
+      --bg-subtle: #ebe3d5;
+      --text-ink: #1a212b;
+      --text-secondary: #46505e;
+      --text-muted: #7b7265;
+      --gold: #b07d2b;
+      --gold-bright: #d4a349;
+      --gold-pale: rgba(176, 125, 43, 0.10);
+      --gold-line: rgba(176, 125, 43, 0.30);
+      --navy-sanctuary: #141e2b;
+      --shadow-sanctuary: 0 30px 80px -20px rgba(20, 30, 43, 0.16), 0 10px 30px -10px rgba(176, 125, 43, 0.10);
+      --font-scale: 1;
+      --pilar-accent: #b07d2b;
+    }
+
+    [data-theme="night"] {
+      --bg-page: #0b0f17;
+      --bg-paper: #121924;
+      --bg-parchment: linear-gradient(145deg, #182232 0%, #101722 100%);
+      --bg-subtle: #1c2636;
+      --text-ink: #f5f0e6;
+      --text-secondary: #cbd5e1;
+      --text-muted: #8e9bae;
+      --gold: #dfb15b;
+      --gold-bright: #f5cc7a;
+      --gold-pale: rgba(223, 177, 91, 0.12);
+      --gold-line: rgba(223, 177, 91, 0.32);
+      --navy-sanctuary: #070a0f;
+      --shadow-sanctuary: 0 35px 90px -15px rgba(0, 0, 0, 0.78);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-ink);
+      min-height: 100vh;
+      font-size: calc(1rem * var(--font-scale));
+      transition: background-color 0.4s ease, color 0.4s ease;
+      background-image:
+        radial-gradient(ellipse at 50% 0%, var(--gold-pale), transparent 60%),
+        radial-gradient(ellipse at 85% 100%, var(--gold-pale), transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* Utilidades de Tipografía Clásica */
+    .font-display {
+      font-family: 'Cinzel', Georgia, 'Palatino Linotype', serif;
+    }
+    .font-editorial {
+      font-family: 'Cormorant Garamond', Georgia, 'Palatino Linotype', serif;
+    }
+
+    /* Animaciones de Transición */
+    @keyframes revealSanctuary {
+      0% { opacity: 0; transform: translateY(18px) scale(0.985); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .animate-sanctuary {
+      animation: revealSanctuary 0.48s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ==========================================================
+       BARRA SUPERIOR MINIMALISTA DE LA CASA DE JUANITA
+       ========================================================== */
+    .top-sanctuary-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(251, 248, 243, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--gold-line);
+      padding: 0.7rem 1.5rem;
+    }
+
+    [data-theme="night"] .top-sanctuary-bar {
+      background: rgba(18, 25, 36, 0.86);
+    }
+
+    .top-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-signature {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .brand-crest {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1.5px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px;
+      box-shadow: 0 4px 12px var(--gold-pale);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .brand-crest img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand-title-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-ink);
+    }
+
+    .brand-tagline {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      background: var(--bg-paper);
+      border: 1px solid var(--gold-line);
+      color: var(--text-ink);
+      padding: 0.42rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.22s ease;
+    }
+
+    .pill-btn:hover {
+      background: var(--gold-pale);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+
+    .pill-btn.gold-solid {
+      background: linear-gradient(135deg, var(--gold), #8f6119);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(176, 125, 43, 0.28);
+    }
+
+    /* ==========================================================
+       VISTA 1: ÍNDICE EDITORIAL (LOS 4 PILARES DE LA CASA DE JUANITA)
+       ========================================================== */
+    .index-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 2.2rem 1.5rem 4rem;
+    }
+
+    .editorial-masthead {
+      text-align: center;
+      max-width: 820px;
+      margin: 0 auto 2.8rem;
+      padding: 2.5rem 2rem;
+      background: var(--bg-paper);
+      border: 1px solid var(--gold-line);
+      border-radius: 28px;
+      box-shadow: var(--shadow-sanctuary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .editorial-masthead::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid var(--gold-line);
+      border-radius: 22px;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .masthead-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.9rem;
+    }
+
+    .masthead-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(1.75rem, 3.8vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.6rem;
+      color: var(--text-ink);
+    }
+
+    .masthead-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      margin: 1rem auto;
+      color: var(--gold);
+      opacity: 0.75;
+    }
+
+    .ornament-line {
+      height: 1px;
+      width: 70px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .masthead-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .instruction-banner {
+      margin-top: 1.35rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      background: var(--gold-pale);
+      border: 1px solid var(--gold-line);
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    /* Secciones por Pilar en el Índice */
+    .pillar-section {
+      margin-bottom: 2.25rem;
+    }
+
+    .pillar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px solid var(--gold-line);
+    }
+
+    .pillar-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .pillar-roman {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--navy-sanctuary);
+      color: var(--gold-bright);
+      font-family: 'Cinzel', Georgia, serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--gold);
+    }
+
+    .pillar-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-ink);
+    }
+
+    .passages-index-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .index-card {
+      background: var(--bg-paper);
+      border: 1px solid var(--gold-line);
+      border-radius: 18px;
+      padding: 1.25rem 1.35rem;
+      cursor: pointer;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.85rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .index-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+      box-shadow: var(--shadow-sanctuary);
+    }
+
+    .index-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .index-num {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+
+    .index-ref {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-ink);
+      margin-top: 0.15rem;
+    }
+
+    .index-snippet {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--text-secondary);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.45;
+    }
+
+    .index-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--gold);
+      padding-top: 0.65rem;
+      border-top: 1px dashed var(--gold-line);
+    }
+
+    /* ==========================================================
+       CONTENEDOR CON MENÚ VERTICAL IZQUIERDO (EXPANSIÓN A LA DERECHA)
+       ========================================================== */
+    .workspace-layout {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 4rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .v-sidebar {
+      width: 74px;
+      flex-shrink: 0;
+      transition: width 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 60;
+    }
+
+    .v-sidebar.expanded {
+      width: 295px;
+    }
+
+    .v-sidebar-inner {
+      position: sticky;
+      top: 5rem;
+      background: var(--bg-paper);
+      border: 1.5px solid var(--gold-line);
+      border-radius: 22px;
+      padding: 0.65rem;
+      box-shadow: var(--shadow-sanctuary);
+      overflow: hidden;
+      transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .v-sidebar.expanded .v-sidebar-inner {
+      padding: 0.9rem;
+    }
+
+    .v-toggle-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.48rem 0.65rem;
+      border-radius: 14px;
+      background: var(--gold-pale);
+      border: 1px solid var(--gold-line);
+      color: var(--gold);
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 0.65rem;
+    }
+
+    .v-toggle-btn:hover {
+      background: var(--gold);
+      color: #ffffff;
+      border-color: var(--gold);
+    }
+
+    .v-expand-only {
+      opacity: 0;
+      max-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      display: inline-block;
+      transition: opacity 0.22s ease, max-width 0.3s ease;
+    }
+
+    .v-sidebar.expanded .v-expand-only {
+      opacity: 1;
+      max-width: 220px;
+    }
+
+    .v-pilar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .v-pilar-btn {
+      width: 100%;
+      background: var(--bg-parchment);
+      border: 1px solid var(--gold-line);
+      border-radius: 14px;
+      padding: 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.22s ease;
+    }
+
+    .v-pilar-btn:hover {
+      border-color: var(--gold);
+      transform: translateX(2px);
+    }
+
+    .v-pilar-btn.active {
+      background: linear-gradient(135deg, var(--gold), #8f6119);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 6px 18px rgba(176, 125, 43, 0.32);
+    }
+
+    .v-pilar-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--gold-pale);
+      color: var(--gold);
+      font-family: 'Cinzel', Georgia, serif;
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      line-height: 1.05;
+    }
+
+    .v-pilar-btn.active .v-pilar-badge {
+      background: rgba(0, 0, 0, 0.18);
+      color: #ffffff;
+    }
+
+    .v-pilar-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .v-pilar-label {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .v-pilar-btn.active .v-pilar-label {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .v-pilar-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .v-pilar-btn.active .v-pilar-title {
+      color: #ffffff;
+    }
+
+    .v-sublist {
+      display: none;
+      margin: 0.3rem 0 0.35rem 1.25rem;
+      padding-left: 0.65rem;
+      border-left: 2px solid var(--gold-line);
+    }
+
+    .v-sidebar.expanded .v-sublist {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .v-subitem-btn {
+      width: 100%;
+      text-align: left;
+      padding: 0.35rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.18s ease;
+    }
+
+    .v-subitem-btn:hover {
+      background: var(--gold-pale);
+      color: var(--text-ink);
+    }
+
+    .v-subitem-btn.active {
+      background: var(--gold-pale);
+      border-color: var(--gold-line);
+      color: var(--gold);
+    }
+
+    .sanctuary-wrapper {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pillar-collapsed-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 14px;
+      background: var(--bg-paper);
+      border: 1px solid var(--gold-line);
+      margin-bottom: 0.6rem;
+    }
+
+    .pillar-toggle-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: var(--gold-pale);
+      border: 1px solid var(--gold-line);
+      color: var(--gold);
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pillar-toggle-pill:hover {
+      border-color: var(--gold);
+      background: var(--gold);
+      color: #ffffff;
+    }
+
+    .mini-pills-scroll {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding: 0.15rem 0;
+      max-width: 100%;
+    }
+
+    .num-dot {
+      padding: 0.34rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--gold-line);
+      background: var(--bg-paper);
+      color: var(--text-secondary);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .num-dot:hover {
+      border-color: var(--gold);
+      color: var(--text-ink);
+    }
+
+    .num-dot.active {
+      background: var(--gold);
+      color: #ffffff;
+      border-color: var(--gold);
+      box-shadow: 0 3px 10px rgba(176, 125, 43, 0.35);
+    }
+
+    /* Hoja Monumental de Manuscrito */
+    .manuscript-sheet {
+      background: var(--bg-paper);
+      border: 1.5px solid var(--gold-line);
+      border-radius: 26px;
+      padding: clamp(1.35rem, 3.2vw, 2.35rem);
+      box-shadow: var(--shadow-sanctuary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Marco interior tipo libro editorial */
+    .manuscript-sheet::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px solid var(--gold-line);
+      border-radius: 20px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    /* Cabecera del Pasaje Elegido (Compacta en una fila para facilitar visualización) */
+    .manuscript-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--gold-line);
+    }
+
+    .pilar-ribbon {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.28rem 0.9rem;
+      border-radius: 999px;
+      background: var(--gold-pale);
+      border: 1px solid var(--gold-line);
+      color: var(--gold);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .manuscript-ref {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.75rem, 3.6vw, 2.45rem);
+      font-weight: 700;
+      color: var(--text-ink);
+      line-height: 1.08;
+      letter-spacing: 0.01em;
+    }
+
+    .manuscript-submeta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* Pergamino Central de la Escritura */
+    .scripture-parchment {
+      background: var(--bg-parchment);
+      border: 1px solid var(--gold-line);
+      border-radius: 22px;
+      padding: clamp(1.6rem, 4vw, 2.75rem);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+      box-shadow: inset 0 0 40px rgba(176, 125, 43, 0.05);
+    }
+
+    .parchment-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--gold-line);
+    }
+
+    .parchment-seal {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .version-switch {
+      display: inline-flex;
+      background: var(--bg-paper);
+      border: 1px solid var(--gold-line);
+      border-radius: 999px;
+      padding: 0.18rem;
+    }
+
+    .version-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .version-btn.active {
+      background: var(--gold);
+      color: #ffffff;
+    }
+
+    .scripture-body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: calc(1.62rem * var(--font-scale));
+      line-height: 1.62;
+      color: var(--text-ink);
+      text-align: left;
+    }
+
+    .scripture-body::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 3.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      float: left;
+      line-height: 0.85;
+      margin-right: 0.55rem;
+      margin-top: 0.15rem;
+    }
+
+    .v-num {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.62em;
+      font-weight: 700;
+      color: var(--gold);
+      vertical-align: super;
+      margin: 0 0.2rem 0 0.35rem;
+      font-style: normal;
+    }
+
+    /* Paneles Editoriales de Enseñanza y Sello La Casa de Juanita */
+    .editorial-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.35rem;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 740px) {
+      .editorial-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ed-box {
+      background: var(--bg-page);
+      border: 1px solid var(--gold-line);
+      border-radius: 18px;
+      padding: 1.4rem 1.5rem;
+    }
+
+    .ed-box.juanita-special {
+      background: var(--gold-pale);
+      border-color: var(--gold);
+    }
+
+    .ed-label {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .hebrew-pill {
+      display: inline-block;
+      background: var(--bg-paper);
+      border: 1px solid var(--gold-line);
+      color: var(--text-ink);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 8px;
+      margin-bottom: 0.65rem;
+    }
+
+    .ed-content {
+      font-size: calc(0.95rem * var(--font-scale));
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Oración Declarativa de La Casa de Juanita */
+    .prayer-banner {
+      position: relative;
+      z-index: 2;
+      background: var(--bg-paper);
+      border: 1px dashed var(--gold);
+      border-radius: 16px;
+      padding: 1.15rem 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .prayer-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      margin-bottom: 0.35rem;
+    }
+
+    .prayer-words {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: calc(1.22rem * var(--font-scale));
+      color: var(--text-ink);
+    }
+
+    /* Diario desplegable */
+    .altar-notes-drawer {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .altar-notes-drawer.open {
+      display: block;
+    }
+
+    .altar-notes-drawer textarea {
+      width: 100%;
+      min-height: 85px;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      border: 1px solid var(--gold);
+      background: var(--bg-page);
+      color: var(--text-ink);
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    /* Barra Inferior de Navegación del Manuscrito */
+    .manuscript-footer {
+      position: relative;
+      z-index: 2;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--gold-line);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-btn-luxury {
+      background: var(--navy-sanctuary);
+      color: var(--gold-bright);
+      border: 1px solid var(--gold);
+      padding: 0.65rem 1.3rem;
+      border-radius: 999px;
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .nav-btn-luxury:hover:not(:disabled) {
+      background: var(--gold);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn-luxury:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--gold-line);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra Superior Minimalista -->
+  <header class="top-sanctuary-bar">
+    <div class="top-bar-inner">
+      <div class="brand-signature" onclick="openIntroStory()">
+        <div class="brand-crest">
+          <img
+            src="https://i.imgur.com/dDYOrEm.png"
+            alt="Logo La Casa de Juanita"
+            onerror="if(window.LCJ_LOGO_B64 && this.src!==window.LCJ_LOGO_B64){this.src=window.LCJ_LOGO_B64;}"
+          />
+        </div>
+        <div class="brand-title-wrap">
+          <span class="brand-title">LA CASA DE JUANITA</span>
+          <span class="brand-tagline">Altar • Palabra • Refugio</span>
+        </div>
+      </div>
+
+      <div class="top-controls">
+        <button class="pill-btn gold-solid" id="btnIntroTop" onclick="openIntroStory()">
+          🌳 Historia del Roble
+        </button>
+        <button class="pill-btn" id="btnToggleIndex" onclick="toggleView()">
+          ✦ Índice de los 12 Pasajes
+        </button>
+        <button class="pill-btn" onclick="adjustFont(-0.08)" title="Reducir texto">A-</button>
+        <button class="pill-btn" onclick="adjustFont(0.08)" title="Aumentar texto">A+</button>
+        <button class="pill-btn" onclick="toggleTheme()" id="themeBtn">🌙 Noche</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =================================================================
+       DISPOSICIÓN PRINCIPAL: MENÚ VERTICAL IZQUIERDO (EXPANSIÓN A LA DERECHA)
+       + LIENZO DE LECTURA
+       ================================================================= -->
+  <div class="workspace-layout">
+
+    <!-- Menú Vertical con Expansión a la Derecha -->
+    <aside
+      id="verticalSidebar"
+      class="v-sidebar"
+      onmouseenter="handleSidebarHover(true)"
+      onmouseleave="handleSidebarHover(false)"
+    >
+      <div class="v-sidebar-inner">
+        <button
+          class="v-toggle-btn"
+          onclick="toggleSidebarManual()"
+          title="Expandir o contraer menú de Pilares hacia la derecha"
+        >
+          <span class="v-expand-only">🕊️ Menú Pilares</span>
+          <span id="sidebarArrowIcon" style="margin:0 auto;">❯</span>
+        </button>
+
+        <div class="v-pilar-list" id="pillarVerticalList"></div>
+      </div>
+    </aside>
+
+    <!-- Lienzo Principal a la Derecha -->
+    <div style="flex:1; min-width:0;">
+
+      <!-- VISTA 0: HISTORIA INICIAL («LA HISTORIA DEL ROBLE Y LA FLEXIBILIDAD») -->
+      <section id="introView" class="sanctuary-wrapper">
+        <article class="manuscript-sheet animate-sanctuary">
+          <div class="manuscript-header">
+            <div>
+              <div style="font-family:'Cinzel',Georgia,serif; font-size:0.72rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:0.25rem;">
+                🌳 Historia Inicial • Pórtico de Reflexión
+              </div>
+              <h1 class="manuscript-ref">“La Historia del Roble y la Flexibilidad”</h1>
+            </div>
+            <div class="pilar-ribbon" style="padding-left:0.35rem;">
+              <img
+                src="https://i.imgur.com/dDYOrEm.png"
+                alt="La Casa de Juanita"
+                style="width:26px; height:26px; border-radius:50%; background:#fff; padding:2px; object-fit:contain; border:1px solid var(--gold);"
+                onerror="if(window.LCJ_LOGO_B64 && this.src!==window.LCJ_LOGO_B64){this.src=window.LCJ_LOGO_B64;}"
+              />
+              <span>La Casa de Juanita</span>
+            </div>
+          </div>
+
+          <div class="scripture-parchment" style="margin-bottom:1.35rem;">
+            <div class="scripture-body" style="font-size: calc(1.28rem * var(--font-scale)); line-height: 1.72;">
+              <p style="margin-bottom: 1.15rem;">
+                Cuenta la historia que un hombre compró una casa antigua en el campo, junto a la cual se alzaba un enorme y viejo roble que parecía indestructible. Un día, una tormenta feroz con vientos huracanados azotó la región. El hombre se despertó en medio de la noche temiendo que el árbol se viniera abajo sobre la casa. Sin embargo, al amanecer, el roble seguía en pie, aunque había perdido algunas hojas y ramas menores.
+              </p>
+              <p>
+                Curioso y sorprendido, el hombre llamó a un experto forestal para que le explicara cómo un árbol tan viejo había resistido semejante embate. El experto le dio una respuesta reveladora: <em style="color:var(--gold); font-weight:600;">—«Los árboles jóvenes y rígidos se quiebran con facilidad porque intentan pelear contra el viento con todas sus fuerzas, tiesos y sin ceder. Este roble viejo, en cambio, ha vivido tantas tormentas que aprendió el secreto: permite que sus ramas se doblen, que el viento sople y que sus raíces profundas absorban el golpe. Sobrevivió no porque no hubiera caos a su alrededor, sino porque supo ceder sin romperse por dentro»</em>.
+              </p>
+            </div>
+          </div>
+
+          <div class="ed-box juanita-special" style="margin-bottom: 1.35rem;">
+            <div class="ed-label">
+              <span>🌿 El puente con la Palabra:</span>
+            </div>
+            <p class="ed-content" style="font-family:'Cormorant Garamond',Georgia,serif; font-size: calc(1.2rem * var(--font-scale)); line-height: 1.68;">
+              A veces nos creemos invulnerables, construyendo nuestra vida bajo la ilusión de que todo estará siempre bajo control. Pero cuando el huracán golpea, descubrimos que la verdadera fortaleza no radica en la rigidez, sino en saber doblarnos en las manos de Dios con un cimiento eterno. La Biblia nos enseña en <strong style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="openPassageExclusive(12)">Proverbios 10:25</strong>: <em>«Como pasa el torbellino, así el malo no permanece; mas el justo permanece para siempre»</em> (<em>«Cuando llegan las tormentas de la vida, los perversos son arrasados, pero los justos tienen un cimiento eterno»</em>, NTV). Un roble fuerte no es aquel al que el viento nunca lo toca, sino aquel cuyo cimiento es tan firme que la sacudida externa puede doblarlo, pero jamás destruirlo.
+            </p>
+          </div>
+
+          <div class="manuscript-footer">
+            <button class="pill-btn" onclick="openPassageExclusive(12)">
+              📜 Ir a Proverbios 10:25
+            </button>
+
+            <button class="nav-btn-luxury" style="background:linear-gradient(135deg, var(--gold), #8f6119); color:#fff; border-color:transparent;" onclick="startFromPillarOne()">
+              Comenzar Estudio • Pilar I (Salmo 91:1-6) →
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- VISTA 1: EL SANTUARIO (MUESTRA ÚNICAMENTE EL PASAJE ELEGIDO) -->
+      <main id="sanctuaryView" class="sanctuary-wrapper hidden">
+        <div class="pillar-collapsed-bar">
+          <button class="pillar-toggle-pill" id="collapsedPillarBtn" onclick="toggleSidebarManual()" title="Abrir menú vertical de Pilares">
+            🕊️ Todos los Pilares (12) ▸
+          </button>
+          <div class="mini-pills-scroll" id="quickDots"></div>
+        </div>
+
+        <div id="manuscriptStage"></div>
+      </main>
+
+      <!-- VISTA 2: ÍNDICE VISUAL DE LOS 4 PILARES (CATÁLOGO DE SELECCIÓN) -->
+      <section id="indexView" class="index-container hidden" style="padding-top:0;">
+        <div id="editorialMasthead" class="editorial-masthead">
+          <div style="width:72px; height:72px; margin:0 auto 0.75rem; border-radius:18px; background:#fff; padding:4px; border:1.5px solid var(--gold); box-shadow:0 6px 18px var(--gold-pale); overflow:hidden;">
+            <img
+              src="https://i.imgur.com/dDYOrEm.png"
+              alt="Logo La Casa de Juanita"
+              style="width:100%; height:100%; object-fit:contain;"
+              onerror="if(window.LCJ_LOGO_B64 && this.src!==window.LCJ_LOGO_B64){this.src=window.LCJ_LOGO_B64;}"
+            />
+          </div>
+          <div class="masthead-badge">
+            <span>🕊️ La Casa de Juanita</span>
+          </div>
+          <h1 class="masthead-title">QUÉ HACER CUANDO HAY CAOS</h1>
+          <p class="masthead-subtitle">Compendio de citas bíblicas y su enseñanza práctica ante la adversidad</p>
+
+          <div class="ornament-divider">
+            <span class="ornament-line"></span>
+            <span>✦</span>
+            <span class="ornament-line"></span>
+          </div>
+
+          <p class="masthead-desc" style="font-family:'Cinzel',Georgia,serif; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-ink);">
+            La Casa de Juanita
+          </p>
+          <div class="instruction-banner">
+            ✨ Toca cualquier pasaje para abrirlo en pantalla exclusiva de meditación
+          </div>
+        </div>
+
+        <div id="pillarsCatalog"></div>
+      </section>
+
+    </div>
+  </div>
+
+  <footer>
+    <span class="font-display" style="color:var(--gold); font-weight:700;">LA CASA DE JUANITA</span> • Guía Bíblica Interactiva para Tiempos de Tempestad
+  </footer>
+
+  <script>
+    const PILARES_META = [
+      { code: "1", roman: "I", title: "Pilar 1: Fortalecer la Comunión", subtitle: "Habitar en el lugar secreto y limpiar el corazón" },
+      { code: "2", roman: "II", title: "Pilar 2: Someterse a la Autoridad Divina", subtitle: "Reconocer el Trono Alto y Sublime de El Altísimo" },
+      { code: "3", roman: "III", title: "Pilar 3: Confiar Plenamente (Batá)", subtitle: "Reposar con serenidad total en el regazo del Padre" },
+      { code: "4", roman: "IV", title: "Pilar 4: Levantarse y Resplandecer", subtitle: "Ser faro de paz y gloria en medio de la oscuridad" },
+      { code: "5", roman: "V", title: "Sello Final: Fundamento Eterno", subtitle: "La resiliencia del roble afirmado en Dios" }
+    ];
+
+    const PILLAR_BUTTONS = [
+      { code: "intro", roman: "🌳", shortTitle: "Historia del Roble", count: "Inicio", summary: "Historia Inicial: La Historia del Roble y la Flexibilidad" },
+      { code: "all", roman: "✦", shortTitle: "Todos", count: 12, summary: "Mostrando los 12 pasajes del estudio" },
+      { code: "1", roman: "I", shortTitle: "1. Comunión", count: 4, summary: "Pilar I: Fortalecer la Comunión (4 pasajes)" },
+      { code: "2", roman: "II", shortTitle: "2. Sometimiento", count: 4, summary: "Pilar II: Someterse a la Autoridad Divina (4 pasajes)" },
+      { code: "3", roman: "III", shortTitle: "3. Confianza (Batá)", count: 1, summary: "Pilar III: Confiar Plenamente - Batá (1 pasaje)" },
+      { code: "4", roman: "IV", shortTitle: "4. Resplandecer", count: 2, summary: "Pilar IV: Levantarse y Resplandecer (2 pasajes)" },
+      { code: "5", roman: "V", shortTitle: "Fundamento", count: 1, summary: "Sello Final: Fundamento Eterno (1 pasaje)" }
+    ];
+
+    const PASSAGES = [
+      {
+        id: 1,
+        ref: "Salmo 91:1-6",
+        bookMeta: "Libro de los Salmos • Cántico de Habitación y Cobertura",
+        pilarCode: "1",
+        pilarLabel: "Pilar I • Comunión",
+        quoteHtml: `El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. <span class="v-num">2</span>Diré yo a Jehová: Esperanza mía, y castillo mío; mi Dios, en quien confiaré. <span class="v-num">3</span>Él te librará del lazo del cazador, de la peste destructora. <span class="v-num">4</span>Con sus plumas te cubrirá, y debajo de sus alas estarás seguro; escudo y adarga es su verdad. <span class="v-num">5</span>No temerás el terror nocturno, ni saeta que vuele de día, <span class="v-num">6</span>ni pestilencia que ande en oscuridad, ni mortandad que en medio del día destruya.`,
+        fullHtml: `El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. <span class="v-num">2</span>Diré yo a Jehová: Esperanza mía, y castillo mío; mi Dios, en quien confiaré. <span class="v-num">3</span>Él te librará del lazo del cazador, de la peste destructora. <span class="v-num">4</span>Con sus plumas te cubrirá, y debajo de sus alas estarás seguro; escudo y adarga es su verdad. <span class="v-num">5</span>No temerás el terror nocturno, ni saeta que vuele de día, <span class="v-num">6</span>ni pestilencia que ande en oscuridad, ni mortandad que en medio del día destruya. <span class="v-num">7</span>Caerán a tu lado mil, y diez mil a tu diestra; mas a ti no llegará. <span class="v-num">8</span>Ciertamente con tus ojos mirarás y verás la recompensa de los impíos. <span class="v-num">9</span>Porque has puesto a Jehová, que es mi esperanza, al Altísimo por tu habitación, <span class="v-num">10</span>no te sobrevendrá mal, ni plaga tocará tu morada. <span class="v-num">11</span>Pues a sus ángeles mandará acerca de ti, que te guarden en todos tus caminos. <span class="v-num">12</span>En las manos te llevarán, para que tu pie no tropiece en piedra. <span class="v-num">13</span>Sobre el león y el áspid pisarás; hollarás al cachorro del león y al dragón. <span class="v-num">14</span>Por cuanto en mí ha puesto su amor, yo también lo libraré; le pondré en alto, por cuanto ha conocido mi nombre. <span class="v-num">15</span>Me invocará, y yo le responderé; con él estaré yo en la angustia; lo libraré y le glorificaré. <span class="v-num">16</span>Lo saciaré de larga vida, y le mostraré mi salvación.`,
+        plainPreview: "«El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. Diré yo a Jehová: Esperanza mía, y castillo mío...»",
+        teaching: "Introduce la promesa central de protección divina en tiempos de crisis. La clave radica en la expresión 'El que habita', que exige convivir, morar y mantener una relación cercana y constante con Dios, y no una simple visita esporádica.",
+        keyConcept: "Palabra Clave: «Yashab» (Habitar / Permanecer)",
+        reflection: "En La Casa de Juanita recordamos que el altar no es una sala de urgencias, sino nuestra dirección permanente. Quien hace de Dios su habitación constante, camina bajo sombra segura.",
+        prayer: "«Señor, hoy elijo no ser un visitante ocasional en Tu presencia; hago de Tu abrigo la morada permanente de mi hogar.»"
+      },
+      {
+        id: 2,
+        ref: "Hechos 3:19",
+        bookMeta: "Hechos de los Apóstoles • El Camino al Refrigerio del Alma",
+        pilarCode: "1",
+        pilarLabel: "Pilar I • Comunión",
+        quoteHtml: `Así que, arrepentíos y convertíos, para que sean borrados vuestros pecados; para que vengan de la presencia del Señor tiempos de refrigerio.`,
+        fullHtml: `Así que, arrepentíos y convertíos, para que sean borrados vuestros pecados; para que vengan de la presencia del Señor tiempos de refrigerio, <span class="v-num">20</span>y él envíe a Jesucristo, que os fue antes anunciado.`,
+        plainPreview: "«Así que, arrepentíos y convertíos, para que sean borrados vuestros pecados; para que vengan de la presencia del Señor tiempos de refrigerio.»",
+        teaching: "Muestra que la limpieza espiritual es requisito previo para la paz. Para experimentar los 'tiempos de refrigerio' y la protección de Dios, es indispensable el arrepentimiento sincero de los pecados.",
+        keyConcept: "Palabra Clave: «Anapsyxis» (Refrigerio / Aliento Fresco)",
+        reflection: "El verdadero descanso en medio del caos comienza con un corazón limpio. Volvernos a Dios con sinceridad abre las ventanas del cielo sobre nuestra familia.",
+        prayer: "«Padre, limpia mi corazón de toda carga y distracción; que de Tu presencia desciendan hoy tiempos de refrigerio sobre mi casa.»"
+      },
+      {
+        id: 3,
+        ref: "Mateo 24:21",
+        bookMeta: "Evangelio según San Mateo • Discurso del Monte de los Olivos",
+        pilarCode: "1",
+        pilarLabel: "Pilar I • Comunión",
+        quoteHtml: `Porque habrá entonces gran tribulación, cual no la ha habido desde el principio del mundo hasta ahora, ni la habrá.`,
+        fullHtml: `Porque habrá entonces gran tribulación, cual no la ha habido desde el principio del mundo hasta ahora, ni la habrá. <span class="v-num">22</span>Y si aquellos días no fuesen acortados, nadie sería salvo; mas por causa de los escogidos, aquellos días serán acortados.`,
+        plainPreview: "«Porque habrá entonces gran tribulación, cual no la ha habido desde el principio del mundo hasta ahora, ni la habrá.»",
+        teaching: "Advierte sobre las señales de los últimos tiempos. Las crisis y plagas son alertas globales; la Iglesia no está exenta de ser probada en su fe durante momentos de aflicción mundial.",
+        keyConcept: "Enfoque Espiritual: Fe Acrisolada en la Aflicción",
+        reflection: "Jesús nos advirtió con amor para que ninguna crisis global nos robe la paz. La prueba no viene a destruir nuestra fe, sino a revelar dónde está anclada.",
+        prayer: "«Señor Jesús, aunque el mundo atraviese tiempos de aflicción, guarda mi fe firme, serena e inconmovible en Tu Palabra.»"
+      },
+      {
+        id: 4,
+        ref: "Mateo 24:42",
+        bookMeta: "Evangelio según San Mateo • Llamado al Despertar Espiritual",
+        pilarCode: "1",
+        pilarLabel: "Pilar I • Comunión",
+        quoteHtml: `Velad, pues, porque no sabéis a qué hora ha de venir vuestro Señor.`,
+        fullHtml: `Velad, pues, porque no sabéis a qué hora ha de venir vuestro Señor. <span class="v-num">43</span>Pero sabed esto, que si el padre de familia supiese a qué hora el ladrón habría de venir, velaría, y no dejaría minar su casa. <span class="v-num">44</span>Por tanto, también vosotros estad preparados; porque el Hijo del Hombre vendrá a la hora que no pensáis.`,
+        plainPreview: "«Velad, pues, porque no sabéis a qué hora ha de venir vuestro Señor.»",
+        teaching: "Un llamado directo a la Iglesia a 'despertar' del adormecimiento espiritual. Ante el pánico generalizado, la instrucción de Cristo es velar y orar con un espíritu atento.",
+        keyConcept: "Palabra Clave: «Gregoreo» (Velar / Mantenerse Despierto)",
+        reflection: "Entre altares y algoritmos, el ruido digital intenta adormecer el alma. Velar es mantener encendida la lámpara de la oración y el discernimiento en casa.",
+        prayer: "«Despierta mi espíritu, Señor; no permitas que el afán ni las pantallas apaguen el fuego de la vigilancia y la oración en mi altar.»"
+      },
+      {
+        id: 5,
+        ref: "Isaías 6:1",
+        bookMeta: "Libro del Profeta Isaías • Visión del Trono Alto y Sublime",
+        pilarCode: "2",
+        pilarLabel: "Pilar II • Sometimiento",
+        quoteHtml: `En el año que murió el rey Uzías vi yo al Señor sentado sobre un trono alto y sublime, y sus faldas llenaban el templo.`,
+        fullHtml: `En el año que murió el rey Uzías vi yo al Señor sentado sobre un trono alto y sublime, y sus faldas llenaban el templo. <span class="v-num">2</span>Por encima de él había serafines; cada uno tenía seis alas; con dos cubrían sus rostros, con dos cubrían sus pies, y con dos volaban. <span class="v-num">3</span>Y el uno al otro daba voces, diciendo: Santo, santo, santo, Jehová de los ejércitos; toda la tierra está llena de su gloria.`,
+        plainPreview: "«En el año que murió el rey Uzías vi yo al Señor sentado sobre un trono alto y sublime, y sus faldas llenaban el templo.»",
+        teaching: "Ilustra el título de 'El Altísimo'. Recuerda que Dios está por encima de cualquier autoridad, riqueza o gobierno humano, exigiendo nuestro sometimiento voluntario.",
+        keyConcept: "Título Divino: «Elyón» (El Altísimo Soberano)",
+        reflection: "Cuando las seguridades terrenales ('el rey Uzías') vacilan, nuestros ojos espirituales descubren que el Trono del Altísimo permanece intacto y lleno de gloria.",
+        prayer: "«Rey Santo y Sublime, hoy reconozco que Tu trono está por encima de todo gobierno y circunstancia; me someto voluntariamente a Tu majestad.»"
+      },
+      {
+        id: 6,
+        ref: "Job 11:7-9",
+        bookMeta: "Libro de Job • Los Secretos Inescrutables del Todopoderoso",
+        pilarCode: "2",
+        pilarLabel: "Pilar II • Sometimiento",
+        quoteHtml: `¿Descubrirás tú los secretos de Dios? ¿Llegarás tú a la perfección del Todopoderoso? <span class="v-num">8</span>Es más alta que los cielos; ¿qué harás? Es más profunda que el Seol; ¿cómo la conocerás? <span class="v-num">9</span>Su dimensión es más extensa que la tierra, y más ancha que el mar.`,
+        fullHtml: `¿Descubrirás tú los secretos de Dios? ¿Llegarás tú a la perfección del Todopoderoso? <span class="v-num">8</span>Es más alta que los cielos; ¿qué harás? Es más profunda que el Seol; ¿cómo la conocerás? <span class="v-num">9</span>Su dimensión es más extensa que la tierra, y más ancha que el mar.`,
+        plainPreview: "«¿Descubrirás tú los secretos de Dios? ¿Llegarás tú a la perfección del Todopoderoso? Es más alta que los cielos...»",
+        teaching: "Enfrenta nuestra limitada comprensión humana. Cuando sobrevienen situaciones inexplicables, la respuesta del creyente no debe ser la rebelión, sino rendir el entendimiento a la soberanía de Dios.",
+        keyConcept: "Sabiduría del Altar: Rendir la Razón a Su Soberanía",
+        reflection: "No necesitamos descifrar cada misterio para descansar en el Todopoderoso. Donde termina nuestra lógica humana, comienza la paz de la rendición.",
+        prayer: "«Señor Todopoderoso, rindo ante Ti mis preguntas y mi entendimiento limitado; confío en Tu sabiduría más alta que los cielos.»"
+      },
+      {
+        id: 7,
+        ref: "Salmo 91:2",
+        bookMeta: "Libro de los Salmos • El Orden Divino de la Pertenencia",
+        pilarCode: "2",
+        pilarLabel: "Pilar II • Sometimiento",
+        quoteHtml: `Diré yo a Jehová: Esperanza mía, y castillo mío; mi Dios, en quien confiaré.`,
+        fullHtml: `El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. <span class="v-num">2</span>Diré yo a Jehová: Esperanza mía, y castillo mío; mi Dios, en quien confiaré.`,
+        plainPreview: "«Diré yo a Jehová: Esperanza mía, y castillo mío; mi Dios, en quien confiaré.»",
+        teaching: "Define el orden de la rendición. Dios se convierte verdaderamente en nuestra 'esperanza y castillo' cuando primero nos sometemos y pertenecemos a Él: 'Él es mío cuando yo soy de Él'.",
+        keyConcept: "Principio de Pacto: «Él es mío cuando yo soy de Él»",
+        reflection: "Llamarlo 'Mi Dios' y 'Castillo mío' es el fruto de pertenecerle por completo. La verdadera seguridad brota de un corazón entregado sin reservas.",
+        prayer: "«Jehová, Tú eres mi esperanza y mi castillo porque primero yo soy Tuyo; mi vida y mi familia te pertenecen.»"
+      },
+      {
+        id: 8,
+        ref: "1 Samuel 5",
+        bookMeta: "Primer Libro de Samuel • El Arca del Pacto frente a los Ídolos",
+        pilarCode: "2",
+        pilarLabel: "Pilar II • Sometimiento",
+        quoteHtml: `Cuando los filisteos capturaron el arca de Dios, la llevaron desde Eben-ezer a Asdod, y la metieron en la casa de Dagón... <span class="v-num">6</span>Y se agravó la mano de Jehová sobre los de Asdod, y los destruyó y los hirió con tumores en Asdod y en todo su territorio.`,
+        fullHtml: `Cuando los filisteos capturaron el arca de Dios, la llevaron desde Eben-ezer a Asdod. <span class="v-num">2</span>Y tomaron los filisteos el arca de Dios, y la metieron en la casa de Dagón, y la pusieron junto a Dagón. <span class="v-num">3</span>Y cuando al siguiente día los de Asdod se levantaron de mañana, he aquí Dagón postrado en tierra delante del arca de Jehová... <span class="v-num">6</span>Y se agravó la mano de Jehová sobre los de Asdod, y los destruyó y los hirió con tumores en Asdod y en todo su territorio.`,
+        plainPreview: "«(Relato del juicio sobre los filisteos y la plaga de tumores al retener el Arca del Pacto)...»",
+        teaching: "Utilizado para explicar el vocablo hebreo 'Deber' (pestilencia o juicio). Enseña que las plagas actúan como avisos de juicio para el impío, pero la protección cubre a quienes viven sometidos bajo pacto.",
+        keyConcept: "Palabra Clave: «Deber» (Cobertura al que vive bajo Pacto)",
+        reflection: "La presencia de Dios no puede compartirse con ídolos. Lo que es juicio para la rebeldía se transforma en cobertura gloriosa para el hogar que vive bajo Su pacto.",
+        prayer: "«Señor, derriba todo ídolo en nuestro corazón; queremos vivir íntegramente bajo la cobertura y la honra de Tu Pacto.»"
+      },
+      {
+        id: 9,
+        ref: "Salmo 91:14",
+        bookMeta: "Libro de los Salmos • Promesa del Padre al que le Ama",
+        pilarCode: "3",
+        pilarLabel: "Pilar III • Confianza (Batá)",
+        quoteHtml: `Por cuanto en mí ha puesto su amor, yo también lo libraré; le pondré en alto, por cuanto ha conocido mi nombre.`,
+        fullHtml: `Por cuanto en mí ha puesto su amor, yo también lo libraré; le pondré en alto, por cuanto ha conocido mi nombre. <span class="v-num">15</span>Me invocará, y yo le responderé; con él estaré yo en la angustia; lo libraré y le glorificaré. <span class="v-num">16</span>Lo saciaré de larga vida, y le mostraré mi salvación.`,
+        plainPreview: "«Por cuanto en mí ha puesto su amor, yo también lo libraré; le pondré en alto, por cuanto ha conocido mi nombre.»",
+        teaching: "Promesa de honra y preservación para quien ama activamente a Dios. 'Batá' implica refugiarse en el regazo del Padre con total dependencia y serenidad en medio del peligro.",
+        keyConcept: "Palabra Clave: «Batá» (Reposar en el Regazo del Padre)",
+        reflection: "Batá es la confianza absoluta de un niño que descansa en los brazos de su Padre mientras afuera ruge la tormenta. Amar Su Nombre nos coloca en lugar alto.",
+        prayer: "«Padre amado, hoy practico Batá: me recuesto en Tu regazo con total dependencia y serenidad, sabiendo que Tú me pones en alto.»"
+      },
+      {
+        id: 10,
+        ref: "Mateo 5:14",
+        bookMeta: "Evangelio según San Mateo • El Sermón del Monte",
+        pilarCode: "4",
+        pilarLabel: "Pilar IV • Resplandecer",
+        quoteHtml: `Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder.`,
+        fullHtml: `Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder. <span class="v-num">15</span>Ni se enciende una luz y se pone debajo de un almud, sino sobre el candelero, y alumbra a todos los que están en casa. <span class="v-num">16</span>Así alumbre vuestra luz delante de los hombres, para que vean vuestras buenas obras, y glorifiquen a vuestro Padre que está en los cielos.`,
+        plainPreview: "«Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder.»",
+        teaching: "Llamado a la acción en medio de la oscuridad social. Mientras el mundo cae en pánico y desesperanza, el cristiano debe destacar mediante la serenidad, la fe y la luz de Jesús.",
+        keyConcept: "Llamado del Altar: Alumbrar Primero a los de Casa",
+        reflection: "Observa el versículo 15: la lámpara sobre el candelero «alumbra a todos los que están en casa». Nuestra paz y fe deben brillar primero en nuestro hogar y desde allí al mundo.",
+        prayer: "«Jesús, Luz del mundo, haz de mi vida y de mi hogar un faro de serenidad, fe y esperanza que no se esconde ante la oscuridad.»"
+      },
+      {
+        id: 11,
+        ref: "Isaías 60:1-2",
+        bookMeta: "Libro del Profeta Isaías • El Amanecer de la Gloria de Jehová",
+        pilarCode: "4",
+        pilarLabel: "Pilar IV • Resplandecer",
+        quoteHtml: `Levántate, resplandece; porque ha venido tu luz, y la gloria de Jehová ha nacido sobre ti. <span class="v-num">2</span>Porque he aquí que tinieblas cubrirán la tierra, y oscuridad las naciones; mas sobre ti amanecerá Jehová, y sobre ti será vista su gloria.`,
+        fullHtml: `Levántate, resplandece; porque ha venido tu luz, y la gloria de Jehová ha nacido sobre ti. <span class="v-num">2</span>Porque he aquí que tinieblas cubrirán la tierra, y oscuridad las naciones; mas sobre ti amanecerá Jehová, y sobre ti será vista su gloria. <span class="v-num">3</span>Y andarán las naciones a tu luz, y los reyes al resplandor de tu nacimiento.`,
+        plainPreview: "«Levántate, resplandece; porque ha venido tu luz, y la gloria de Jehová ha nacido sobre ti...»",
+        teaching: "Proclamación profética final. Aunque las tinieblas cubran las naciones, sobre la Iglesia amanecerá la gloria de Dios para manifestar su poder y provisión en tiempos difíciles.",
+        keyConcept: "Proclamación Profética: Amanecer de Su Gloria",
+        reflection: "Las tinieblas en la tierra no son señal de derrota, sino el lienzo donde más resplandece el amanecer de Jehová sobre Sus hijos. ¡Levántate y resplandece!",
+        prayer: "«¡Me levanto y resplandezco en el nombre de Jesús! Aunque haya oscuridad afuera, sobre mi casa amanece hoy la gloria de Jehová.»"
+      },
+      {
+        id: 12,
+        ref: "Proverbios 10:25",
+        bookMeta: "Libro de los Proverbios • Sello de La Casa de Juanita",
+        pilarCode: "5",
+        pilarLabel: "Sello Final • Fundamento Eterno",
+        quoteHtml: `Cuando llegan las tormentas de la vida, los perversos son arrasados, pero los justos tienen un cimiento eterno.`,
+        fullHtml: `Cuando llegan las tormentas de la vida, los perversos son arrasados, pero los justos tienen un cimiento eterno. <span class="v-num">RVR1960</span>Como pasa el torbellino, así el malo no permanece; mas el justo permanece para siempre.`,
+        plainPreview: "«Cuando llegan las tormentas de la vida, los perversos son arrasados, pero los justos tienen un cimiento eterno.»",
+        teaching: "(Fuente: La Casa de Juanita) Refuerza la metáfora de la resiliencia espiritual. Quien está afirmado en Dios se dobla como el roble ante la tempestad sin quebrarse por dentro.",
+        keyConcept: "Metáfora de La Casa de Juanita: El Roble con Cimiento Eterno",
+        reflection: "El roble tiene raíces tan profundas que puede inclinarse ante el huracán sin quebrarse jamás por dentro. Nuestro cimiento eterno es Cristo mismo.",
+        prayer: "«Señor, gracias porque mis raíces están en Tu cimiento eterno; las tormentas pasarán, pero mi casa permanecerá firme en Ti.»"
+      }
+    ];
+
+    let activePillar = 'all';
+    let currentId = 1;
+    let currentView = 'intro'; // 'intro' (Historia del Roble) | 'sanctuary' (solo el elegido) | 'index' (catálogo de los 4 pilares)
+    let versionTab = 'quote'; // 'quote' | 'full'
+    let fontScale = 1;
+    let isSidebarExpanded = false;
+    let isSidebarPinned = false;
+
+    let studiedMap = JSON.parse(localStorage.getItem('lcj_v3_studied') || '{}');
+    let notesMap = JSON.parse(localStorage.getItem('lcj_v3_notes') || '{}');
+
+    function getFilteredPassages() {
+      return PASSAGES.filter(p => activePillar === 'all' || p.pilarCode === activePillar);
+    }
+
+    function syncSidebarDOM() {
+      const sb = document.getElementById('verticalSidebar');
+      const arrow = document.getElementById('sidebarArrowIcon');
+      if (!sb) return;
+      if (isSidebarExpanded) {
+        sb.classList.add('expanded');
+        if (arrow) arrow.textContent = '❮';
+      } else {
+        sb.classList.remove('expanded');
+        if (arrow) arrow.textContent = '❯';
+      }
+    }
+
+    function handleSidebarHover(entering) {
+      if (isSidebarPinned) return;
+      isSidebarExpanded = entering;
+      syncSidebarDOM();
+    }
+
+    function toggleSidebarManual() {
+      isSidebarExpanded = !isSidebarExpanded;
+      isSidebarPinned = isSidebarExpanded;
+      syncSidebarDOM();
+    }
+
+    function openIntroStory() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      currentView = 'intro';
+      isSidebarPinned = false;
+      isSidebarExpanded = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderAll();
+    }
+
+    function startFromPillarOne() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      activePillar = '1';
+      currentId = 1;
+      currentView = 'sanctuary';
+      isSidebarPinned = false;
+      isSidebarExpanded = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderAll();
+    }
+
+    function selectPillar(code) {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      if (code === 'intro') {
+        openIntroStory();
+        return;
+      }
+      activePillar = code;
+      if (currentView === 'intro') {
+        currentView = 'sanctuary';
+      }
+      const list = getFilteredPassages();
+      if (list.length && !list.some(p => p.id === currentId)) {
+        currentId = list[0].id;
+      }
+      // Contraemos el menú vertical tras elegir para facilitar la visualización inmediata
+      isSidebarPinned = false;
+      isSidebarExpanded = false;
+      renderAll();
+    }
+
+    function stepFiltered(delta) {
+      const list = getFilteredPassages();
+      const idx = list.findIndex(p => p.id === currentId);
+      if (idx === -1) return;
+      const next = list[idx + delta];
+      if (next) {
+        openPassageExclusive(next.id);
+      }
+    }
+
+    function openPassageExclusive(id) {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      currentId = id;
+      currentView = 'sanctuary';
+      isSidebarPinned = false;
+      isSidebarExpanded = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderAll();
+    }
+
+    function showIndexView() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      currentView = 'index';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderAll();
+    }
+
+    function toggleView() {
+      if (currentView === 'index') {
+        openPassageExclusive(currentId);
+      } else {
+        showIndexView();
+      }
+    }
+
+    function setVersionTab(tab) {
+      versionTab = tab;
+      renderSanctuary();
+    }
+
+    function toggleStudied(id) {
+      studiedMap[id] = !studiedMap[id];
+      localStorage.setItem('lcj_v3_studied', JSON.stringify(studiedMap));
+      renderAll();
+    }
+
+    function toggleNotesDrawer() {
+      const el = document.getElementById('notesDrawer');
+      if (el) el.classList.toggle('open');
+    }
+
+    function saveNote(id, val) {
+      notesMap[id] = val;
+      localStorage.setItem('lcj_v3_notes', JSON.stringify(notesMap));
+    }
+
+    function speakCurrent(btn) {
+      if (!('speechSynthesis' in window)) return;
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        btn.innerHTML = '🔊 Escuchar';
+        return;
+      }
+      const p = PASSAGES.find(x => x.id === currentId);
+      if (!p) return;
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = versionTab === 'full' ? p.fullHtml : p.quoteHtml;
+      const cleanScripture = tempDiv.textContent || tempDiv.innerText || '';
+      const utter = new SpeechSynthesisUtterance(
+        `${p.ref}. ${cleanScripture}. Enseñanza: ${p.teaching}. Reflexión de La Casa de Juanita: ${p.reflection}. Oración: ${p.prayer}`
+      );
+      utter.lang = 'es-ES';
+      utter.rate = 0.93;
+      utter.onend = () => { btn.innerHTML = '🔊 Escuchar'; };
+      btn.innerHTML = '⏹️ Detener';
+      window.speechSynthesis.speak(utter);
+    }
+
+    function renderPillarBar() {
+      const vList = document.getElementById('pillarVerticalList');
+      const collapsedBtn = document.getElementById('collapsedPillarBtn');
+      const mastheadEl = document.getElementById('editorialMasthead');
+      const currentMeta = PILLAR_BUTTONS.find(b => b.code === activePillar) || PILLAR_BUTTONS[1];
+
+      if (mastheadEl) {
+        if (activePillar !== 'all') {
+          mastheadEl.classList.add('hidden');
+        } else {
+          mastheadEl.classList.remove('hidden');
+        }
+      }
+
+      if (collapsedBtn) {
+        const label = activePillar === 'all'
+          ? '🕊️ Todos los Pilares (12)'
+          : `🕊️ Pilar ${currentMeta.roman} • ${currentMeta.shortTitle}`;
+        collapsedBtn.innerHTML = `${label} <span style="opacity:0.85; font-size:0.65rem; margin-left:0.25rem;">▸</span>`;
+      }
+
+      if (vList) {
+        vList.innerHTML = PILLAR_BUTTONS.map(b => {
+          const isActive = (b.code === 'intro' && currentView === 'intro') || (b.code !== 'intro' && currentView !== 'intro' && b.code === activePillar);
+          const pillarPassages = (b.code === 'all' || b.code === 'intro')
+            ? []
+            : PASSAGES.filter(p => p.pilarCode === b.code);
+
+          return `
+            <div>
+              <button
+                class="v-pilar-btn ${isActive ? 'active' : ''}"
+                onclick="selectPillar('${b.code}')"
+                title="${b.shortTitle}"
+              >
+                <div class="v-pilar-badge">
+                  <span style="font-size:0.82rem;">${b.roman}</span>
+                  <span style="font-size:0.55rem; opacity:0.85;">${b.count}</span>
+                </div>
+                <div class="v-pilar-meta v-expand-only">
+                  <div class="v-pilar-label">${b.code === 'intro' ? 'Historia Inicial' : `Pilar ${b.roman}`}</div>
+                  <div class="v-pilar-title">${b.shortTitle}</div>
+                </div>
+              </button>
+
+              ${isActive && pillarPassages.length ? `
+                <div class="v-sublist">
+                  ${pillarPassages.map(p => `
+                    <button
+                      class="v-subitem-btn ${p.id === currentId && currentView === 'sanctuary' ? 'active' : ''}"
+                      onclick="openPassageExclusive(${p.id})"
+                    >
+                      <span>${p.id}. ${p.ref}</span>
+                      ${studiedMap[p.id] ? '<span style="color:#10b981;">✓</span>' : ''}
+                    </button>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+      }
+
+      syncSidebarDOM();
+    }
+
+    function renderQuickDots() {
+      const container = document.getElementById('quickDots');
+      const list = getFilteredPassages();
+      container.innerHTML = list.map(p => `
+        <button
+          class="num-dot ${p.id === currentId ? 'active' : ''}"
+          onclick="openPassageExclusive(${p.id})"
+          title="${p.id}. ${p.ref}"
+        >
+          <span>${p.id}. ${p.ref}</span>
+          ${studiedMap[p.id] ? '<span style="color:#10b981;">✓</span>' : ''}
+        </button>
+      `).join('');
+    }
+
+    function renderSanctuary() {
+      const p = PASSAGES.find(x => x.id === currentId) || PASSAGES[0];
+      const list = getFilteredPassages();
+      const idx = list.findIndex(x => x.id === p.id);
+      const isDone = !!studiedMap[p.id];
+      const noteText = notesMap[p.id] || '';
+      const stage = document.getElementById('manuscriptStage');
+
+      stage.innerHTML = `
+        <article class="manuscript-sheet animate-sanctuary" key="${p.id}">
+          <!-- Cabecera Compacta del Pasaje (en una sola línea para facilitar la lectura inmediata) -->
+          <div class="manuscript-header">
+            <div style="display:flex; align-items:baseline; gap:0.85rem; flex-wrap:wrap;">
+              <h1 class="manuscript-ref">${p.ref}</h1>
+              <span class="manuscript-submeta">${p.bookMeta} • Pasaje ${p.id} de 12</span>
+            </div>
+            <div class="pilar-ribbon" style="padding-left:0.35rem;">
+              <img
+                src="https://i.imgur.com/dDYOrEm.png"
+                alt="La Casa de Juanita"
+                style="width:24px; height:24px; border-radius:50%; background:#fff; padding:2px; object-fit:contain; border:1px solid var(--gold);"
+                onerror="if(window.LCJ_LOGO_B64 && this.src!==window.LCJ_LOGO_B64){this.src=window.LCJ_LOGO_B64;}"
+              />
+              <span>La Casa de Juanita</span>
+              <span>•</span>
+              <span>${p.pilarLabel}</span>
+            </div>
+          </div>
+
+          <!-- Pergamino Iluminado del Texto Bíblico -->
+          <div class="scripture-parchment">
+            <div class="parchment-toolbar">
+              <span class="parchment-seal">📜 Sagrada Escritura</span>
+              <div class="version-switch">
+                <button
+                  class="version-btn ${versionTab === 'quote' ? 'active' : ''}"
+                  onclick="setVersionTab('quote')"
+                >
+                  Pasaje del Estudio
+                </button>
+                <button
+                  class="version-btn ${versionTab === 'full' ? 'active' : ''}"
+                  onclick="setVersionTab('full')"
+                >
+                  Lectura Extendida
+                </button>
+              </div>
+            </div>
+
+            <div class="scripture-body">
+              ${versionTab === 'full' ? p.fullHtml : p.quoteHtml}
+            </div>
+          </div>
+
+          <!-- Dos Columnas Editoriales: Enseñanza + Sello La Casa de Juanita -->
+          <div class="editorial-columns">
+            <div class="ed-box">
+              <div class="ed-label">
+                <span>📘 Enseñanza y Contexto</span>
+              </div>
+              <p class="ed-content">${p.teaching}</p>
+            </div>
+
+            <div class="ed-box juanita-special">
+              <div class="ed-label">
+                <span>🕊️ Sello La Casa de Juanita</span>
+              </div>
+              <div class="hebrew-pill">${p.keyConcept}</div>
+              <p class="ed-content">${p.reflection}</p>
+            </div>
+          </div>
+
+          <!-- Oración Declarativa para el Altar -->
+          <div class="prayer-banner">
+            <div class="prayer-title">🙏 Oración en el Altar • La Casa de Juanita</div>
+            <div class="prayer-words">${p.prayer}</div>
+          </div>
+
+          <!-- Cajón de Notas Personales -->
+          <div id="notesDrawer" class="altar-notes-drawer ${noteText ? 'open' : ''}">
+            <textarea
+              placeholder="Escribe aquí tu reflexión o petición personal sobre ${p.ref} (se guarda automáticamente)..."
+              oninput="saveNote(${p.id}, this.value)"
+            >${noteText}</textarea>
+          </div>
+
+          <!-- Barra Inferior de Acciones y Navegación -->
+          <div class="manuscript-footer">
+            <button
+              class="nav-btn-luxury"
+              onclick="stepFiltered(-1)"
+              ${idx <= 0 ? 'disabled' : ''}
+            >
+              ← Anterior
+            </button>
+
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+              <button class="pill-btn ${isDone ? 'gold-solid' : ''}" onclick="toggleStudied(${p.id})">
+                ${isDone ? '✓ Meditado en el Altar' : '○ Marcar Meditado'}
+              </button>
+              <button class="pill-btn" onclick="speakCurrent(this)">
+                🔊 Escuchar
+              </button>
+              <button class="pill-btn" onclick="toggleNotesDrawer()">
+                ✍️ Mi Altar (Notas)
+              </button>
+            </div>
+
+            <button
+              class="nav-btn-luxury"
+              onclick="stepFiltered(1)"
+              ${idx >= list.length - 1 ? 'disabled' : ''}
+            >
+              Siguiente →
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderCatalog() {
+      const container = document.getElementById('pillarsCatalog');
+      const visiblePillars = PILARES_META.filter(pm => activePillar === 'all' || pm.code === activePillar);
+      container.innerHTML = visiblePillars.map(pilar => {
+        const items = PASSAGES.filter(x => x.pilarCode === pilar.code);
+        return `
+          <div class="pillar-section">
+            <div class="pillar-header">
+              <div class="pillar-title-group">
+                <div class="pillar-roman">${pilar.roman}</div>
+                <div>
+                  <h2 class="pillar-heading">${pilar.title}</h2>
+                  <p style="font-size:0.8rem; color:var(--text-muted);">${pilar.subtitle}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="passages-index-grid">
+              ${items.map(item => {
+                const isDone = !!studiedMap[item.id];
+                return `
+                  <article class="index-card" onclick="openPassageExclusive(${item.id})">
+                    <div>
+                      <div class="index-card-top">
+                        <span class="index-num">PASAJE ${item.id}</span>
+                        ${isDone ? '<span style="color:#059669; font-size:0.75rem; font-weight:700;">✓ Meditado</span>' : ''}
+                      </div>
+                      <h3 class="index-ref">${item.ref}</h3>
+                      <p class="index-snippet" style="margin-top:0.5rem;">${item.plainPreview}</p>
+                    </div>
+                    <div class="index-card-footer">
+                      <span>🕊️ La Casa de Juanita</span>
+                      <span>Abrir en el Santuario →</span>
+                    </div>
+                  </article>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAll() {
+      const introEl = document.getElementById('introView');
+      const sanctuaryEl = document.getElementById('sanctuaryView');
+      const indexEl = document.getElementById('indexView');
+      const btnToggle = document.getElementById('btnToggleIndex');
+      const btnIntro = document.getElementById('btnIntroTop');
+
+      renderPillarBar();
+
+      if (btnIntro) {
+        if (currentView === 'intro') {
+          btnIntro.classList.add('gold-solid');
+        } else {
+          btnIntro.classList.remove('gold-solid');
+        }
+      }
+
+      if (currentView === 'intro') {
+        if (introEl) introEl.classList.remove('hidden');
+        sanctuaryEl.classList.add('hidden');
+        indexEl.classList.add('hidden');
+        btnToggle.innerHTML = '✦ Índice de los 12 Pasajes';
+      } else if (currentView === 'sanctuary') {
+        if (introEl) introEl.classList.add('hidden');
+        sanctuaryEl.classList.remove('hidden');
+        indexEl.classList.add('hidden');
+        btnToggle.innerHTML = '✦ Índice de los 12 Pasajes';
+        renderQuickDots();
+        renderSanctuary();
+      } else {
+        if (introEl) introEl.classList.add('hidden');
+        sanctuaryEl.classList.add('hidden');
+        indexEl.classList.remove('hidden');
+        btnToggle.innerHTML = '🎯 Volver al Pasaje Elegido';
+        renderCatalog();
+      }
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isNight = html.getAttribute('data-theme') === 'night';
+      const next = isNight ? 'parchment' : 'night';
+      html.setAttribute('data-theme', next);
+      document.getElementById('themeBtn').innerHTML = next === 'night' ? '☀️ Pergamino' : '🌙 Noche';
+    }
+
+    function adjustFont(delta) {
+      fontScale = Math.max(0.85, Math.min(1.3, fontScale + delta));
+      document.documentElement.style.setProperty('--font-scale', fontScale);
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (currentView === 'sanctuary' && document.activeElement.tagName !== 'TEXTAREA') {
+        if (e.key === 'ArrowRight') stepFiltered(1);
+        if (e.key === 'ArrowLeft') stepFiltered(-1);
+      }
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>
